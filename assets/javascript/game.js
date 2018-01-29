@@ -1,44 +1,58 @@
-      var goal_number;
+var targetNumber;
 
-      var counter;
-      var Wins = 0;
-      var Losses = 0;
-      var number_choices = [];
-      var number-crystals;
+var counter;
+var gameWins = 0;
+var gameLosses = 0;
+var numberOptions = [];
+var crystalNumber;
 
+function resetGame(){
 
-
-  $(".crystal-image").on("click", function() {
-
-    var crystalValue = ($(this).attr("data-crystalvalue"));
-    crystalValue = parseInt(crystalValue);
-    counter += crystalValue;
-    $("#current-total").text(counter);
-
-    if (counter === goal_number) {
-      alert("You win");
-      Wins++;
-      $("#current-wins").text(Wins);
-      resetGame();
-    }
-
-    else if (counter >= goal_number) {
-      alert("You lost");
-      Losses++;
-      $("#current-losses").text(Losses);
-      resetGame();
-    }
-    function resetGame(){
-
-        goal_number = (Math.floor(Math.random()*101) + 19);
-        $("#number-to-guess").text(goal_number);
-        counter = 0;
-        for (var i = 0; i < 4; i++) {
-          number-crystals = (Math.ceil(Math.random()*12));
-          number_choices[i] = number-crystals;
-        }
-
-    };
+targetNumber = (Math.floor(Math.random()*101) + 19);
+$("#number-to-guess").text(targetNumber);
 
 
-  });
+counter = 0;
+
+
+for (var i = 0; i < 4; i++) {
+  crystalNumber = (Math.ceil(Math.random()*12));
+  numberOptions[i] = crystalNumber;
+}
+
+};
+
+
+
+resetGame();
+for (var i = 0; i < numberOptions.length; i++) {
+  var imageCrystal = $("<img>");
+  imageCrystal.addClass("crystal-image");
+  imageCrystal.attr("src", "https://vignette.wikia.nocookie.net/marvel-contestofchampions/images/c/cd/Crystal_alliance.png/revision/latest?cb=20151121233509");
+  imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+  $("#crystals").append(imageCrystal);
+}
+
+
+$(".crystal-image").on("click", function() {
+
+var crystalValue = ($(this).attr("data-crystalvalue"));
+crystalValue = parseInt(crystalValue);
+counter += crystalValue;
+$("#current-total").text(counter);
+
+if (counter === targetNumber) {
+alert("You win!");
+gameWins++;
+$("#current-wins").text(gameWins);
+resetGame();
+}
+
+else if (counter >= targetNumber) {
+alert("You lose!!");
+gameLosses++;
+$("#current-losses").text(gameLosses);
+resetGame();
+}
+
+});
